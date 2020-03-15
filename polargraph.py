@@ -1,5 +1,5 @@
 """
-Polar Graph ('Spirograph' Creator)
+Polar Graph
 Bob Klemm - 3/15/2020
 """
 
