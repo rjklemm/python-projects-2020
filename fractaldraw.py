@@ -1,10 +1,15 @@
+# -*- coding: utf-8 -*-
+"""
+Spyder Editor
+
+This is a temporary script file.
+"""
+
 """ 
 Fractal Draw
 April 2020
-
 """
 
-import numpy as np
 import math
 import matplotlib.pyplot as plt
 
@@ -21,6 +26,7 @@ def main():
     #d = [1,2,3,4,5,6] = regular hexagon
     #d = [1,3,5] or [2,4,6] = equilateral triangle
 
+   
     #Sierpinski Carpet
 
     s = 10 #number of iterations
@@ -62,6 +68,7 @@ def main():
         y.append(ynew)
     
     plt.plot(x,y)
+    plt.title('Sierpinski Carpet')
     plt.show()
     
     
@@ -95,11 +102,13 @@ def main():
         y.append(ynew)
     
     plt.plot(x,y)
+    plt.title('Another fractal')
     plt.show()
 
 
+
     
-    #Koch Snowflake
+    #Koch Snowflake (Fractal)
 
     x = [0]
     y = [0]
@@ -128,11 +137,14 @@ def main():
         y.append(ynew)
     
     plt.plot(x,y)
+    plt.title('Koch Snowflake')
     plt.show()
     
 
     
-    #Squares
+    
+    
+    #Square Dragon Fractal Generator
 
     #Examples
     #d = [1,2,3,4] = square (without any repeating/iterating)
@@ -142,96 +154,83 @@ def main():
 
     s = 10 #number of steps of dragon fractal
 
-    d = [1,2] #seed 1 (dragon fractal)
-
-    #Order 3
-    #d = [1,1,2] #seed 2
-    #d = [1,1,3] #seed 3
-    #d = [1,2,1] #seed 4
-    #d = [1,2,3] #seed 5
-    #d = [1,2,4] #seed 6
-    #d = [1,3,2] #seed 7
-    #d = [1,3,3] #seed 8 
-    #d = [1,3,4] #seed 9
-
-    #Best of Order 4
-    #d = [1,2,1,2]
-    #d = [1,2,2,3]
-    #d = [1,2,4,1]
-    #d = [1,3,3,3]
-    #d = [1,3,4,3]
-    #d = [1,3,4,4]
-
-
+    #Order 2 Sequence
+    seeds = [[1,2]] #seed 1 (original dragon fractal) 
     
-    for k in range(0,s):
-        c = []
-        for i in range(0,len(d)):
-            c.append(d[len(d)-1-i])
-            c[i] = c[i] + 1
-            if c[i] > 4:
-                c[i] = c[i] - 4
-
-        d.extend(c)
+    #Order 3 Sequences
+    #seeds = [[1,1,2],[1,1,3],[1,2,1],[1,2,2],[1,2,3],[1,2,4],[1,3,1],[1,3,2],[1,3,3],[1,3,4]]
         
-
-    for i in range(0,len(d)):
-        [xnew, ynew] = squaremove(x[i],y[i],d[i])
-        x.append(xnew)
-        y.append(ynew)
-
-
-    plt.plot(x,y)
-    plt.show()
+    #Order 4 Sequences
+    seeds = [[1,2,1,2],[1,2,2,1],[1,2,2,2],[1,2,2,3],[1,2,4,1],[1,3,3,3],[1,3,4,3],[1,3,4,4],[1,1,1,2],[1,1,2,1],[1,1,2,2],[1,1,3,1],[1,1,3,2],[1,1,3,3],[1,2,3,1]]
+    
+    num = 0
+    
+    for d in seeds:
+        x = [0]
+        y = [0]
+        num += 1
+        for k in range(0,s):
+            c = []
+            for i in range(0,len(d)):
+                c.append(d[len(d)-1-i])
+                c[i] = c[i] + 1
+                if c[i] > 4:
+                    c[i] = c[i] - 4
+    
+            d.extend(c)
+            
+    
+        for i in range(0,len(d)):
+            [xnew, ynew] = squaremove(x[i],y[i],d[i])
+            x.append(xnew)
+            y.append(ynew)
+    
+        plt.figure(num)
+        plt.plot(x,y)
+        plt.title('Dragon Sequence ' + str(d[0]) + str(d[1]))
+        plt.show()
     
     
     
-    #New triangle drawing (space filling)
-
-
-    x = [0]
-    y = [0]
-
+    #Triangular Tesselation Generator
+    
     s = 10 #number of iterations
 
-    #d = [1,3] #seed 1 (space filling, all triangles)
+    #Order 2
+    #seeds = [[1,3],[1,2]]
 
     #Best of Order 3
-    #d = [1,2] #seed 2 (rhombus/cubes)
-    #d = [1,2,1] #seed 3 (another tessellation)
-    #d = [1,1,2] #seed 4 (another tessellation)
+    #seeds = [[1,2,1],[1,1,2]]
 
     #Best of Order 4
-    #d = [1,1,1,2]
-    #d = [1,1,1,3]
-    #d = [1,1,2,1]
-    #d = [1,1,2,3]
-    #d = [1,1,2,6]
-    #d = [1,2,1,2]
-    d = [1,2,1,6]
-    #d = [1,2,2,1]
-    #d = [1,2,2,6]
-    #d = [1,3,2,2]
+    seeds = [[1,1,1,2],[1,1,1,3],[1,1,2,1],[1,1,2,3],[1,1,2,6],[1,2,1,2],[1,2,1,6],[1,2,2,1],[1,2,2,6],[1,3,2,2]]
 
+    num = 0
 
-    for k in range(0,s):
-        c = []
+    for d in seeds:
+        x = [0]
+        y = [0]
+        num += 1
+        for k in range(0,s):
+            c = []
+            for i in range(0,len(d)):
+                c.append(d[len(d)-1-i])
+                c[i] = c[i] + 2
+                if c[i] > 6:
+                    c[i] = c[i] - 6
+    
+            d.extend(c)
+    
         for i in range(0,len(d)):
-            c.append(d[len(d)-1-i])
-            c[i] = c[i] + 2
-            if c[i] > 6:
-                c[i] = c[i] - 6
-
-        d.extend(c)
-
-    for i in range(0,len(d)):
-        [xnew, ynew] = trianglemove(x[i],y[i],d[i])
-        x.append(xnew)
-        y.append(ynew)
-
-    plt.plot(x,y)
-    plt.show()
-   
+            [xnew, ynew] = trianglemove(x[i],y[i],d[i])
+            x.append(xnew)
+            y.append(ynew)
+    
+        plt.figure(num)
+        plt.plot(x,y)
+        plt.title('Tessellation Sequence ' + str(d[0]) + str(d[1]) + str(d[2]) + str(d[3]))
+        plt.show()
+       
 
 def squaremove(x0,y0,d,c = 1):
     #moves the point in one of 4 directions, each 90 degrees apart
